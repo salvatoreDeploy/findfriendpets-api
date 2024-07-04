@@ -13,8 +13,8 @@ interface CreateOrgUseCaseRequest {
   city: string
   neighborhood: string
   street: string
-  latitude: string
-  longitude: string
+  latitude: number
+  longitude: number
 }
 
 interface CreateOrgUseCaseResponse {
