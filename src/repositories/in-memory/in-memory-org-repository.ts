@@ -1,6 +1,10 @@
 import { Organization, Prisma } from '@prisma/client'
-import { OrganizationRepositoy } from '../organization.repository'
+import {
+  findManyNearByOrganizationParams,
+  OrganizationRepositoy,
+} from '../organization.repository'
 import { Decimal } from '@prisma/client/runtime/library'
+import { getDistanceBetweenCoordinates } from '@/utils/get-distance-between-coordinates'
 
 export class InMemoryOrgRepository implements OrganizationRepositoy {
   public items: Organization[] = []
@@ -22,5 +26,24 @@ export class InMemoryOrgRepository implements OrganizationRepositoy {
     return (
       this.items.find((organization) => organization.email === email) || null
     )
+  }
+
+  async findManyNearByOrganization(
+    params: findManyNearByOrganizationParams,
+  ): Promise<Organization[]> {
+    return this.items.filter((item) => {
+      const distance = getDistanceBetweenCoordinates(
+        {
+          latitude: params.latitude,
+          longitude: params.longitude,
+        },
+        {
+          latitude: item.latitude.toNumber(),
+          longitude: item.longitude.toNumber(),
+        },
+      )
+
+      return distance < 10 // Retorna organizações dentro do daio das coordenada menores q 10
+    })
   }
 }
