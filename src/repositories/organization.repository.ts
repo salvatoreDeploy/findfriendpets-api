@@ -7,6 +7,7 @@ export interface findManyNearByOrganizationParams {
 
 export interface OrganizationRepositoy {
   findByEmail(email: string): Promise<Organization | null>
+  findById(organization_id: string): Promise<Organization | null>
   create(data: Prisma.OrganizationCreateInput): Promise<Organization>
   findManyNearByOrganization(
     params: findManyNearByOrganizationParams,

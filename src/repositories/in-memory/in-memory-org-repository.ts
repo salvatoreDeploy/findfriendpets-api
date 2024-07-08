@@ -28,6 +28,13 @@ export class InMemoryOrgRepository implements OrganizationRepositoy {
     )
   }
 
+  async findById(organization_id: string): Promise<Organization | null> {
+    return (
+      this.items.find((organization) => organization.id === organization_id) ||
+      null
+    )
+  }
+
   async findManyNearByOrganization(
     params: findManyNearByOrganizationParams,
   ): Promise<Organization[]> {
