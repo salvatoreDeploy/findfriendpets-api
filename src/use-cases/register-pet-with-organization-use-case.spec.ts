@@ -11,7 +11,7 @@ describe('Register a pet with an organization', () => {
 
   beforeAll(() => {
     organizationRepository = new InMemoryOrgRepository()
-    petRepository = new InMemoryPetRepository()
+    petRepository = new InMemoryPetRepository(organizationRepository)
     sut = new RegisterPetWithOrganization(organizationRepository, petRepository)
   })
 
