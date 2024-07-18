@@ -3,6 +3,7 @@ import { InMemoryPetRepository } from '@/repositories/in-memory/in-memory-pet-re
 import { RegisterPetWithOrganization } from './register-pet-with-organization-use-case'
 import { makeOrganization } from '@tests/factories/make-org.factory'
 import { makePet } from '@tests/factories/make-pet.factory'
+import { OrgNotFoundError } from './errors/org-not-found-error'
 
 describe('Register a pet with an organization', () => {
   let organizationRepository: InMemoryOrgRepository
@@ -30,6 +31,6 @@ describe('Register a pet with an organization', () => {
 
     await petRepository.register(pet)
 
-    await expect(sut.execute(pet)).rejects.toBeInstanceOf(Error)
+    await expect(sut.execute(pet)).rejects.toBeInstanceOf(OrgNotFoundError)
   })
 })

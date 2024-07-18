@@ -2,6 +2,7 @@ import { makePet } from '@tests/factories/make-pet.factory'
 import { GetPetDetailsUseCase } from './get-pet-details-use-case'
 import { InMemoryPetRepository } from '@/repositories/in-memory/in-memory-pet-repository'
 import { InMemoryOrgRepository } from '@/repositories/in-memory/in-memory-org-repository'
+import { PetNotFoundError } from './errors/pet-not-found-error'
 
 describe('Get Details Pet Use Case', () => {
   let petRepository: InMemoryPetRepository
@@ -24,7 +25,7 @@ describe('Get Details Pet Use Case', () => {
 
   it('should not be able to get details a non-existing pet', async () => {
     await expect(sut.execute({ id: 'id-invalid' })).rejects.toBeInstanceOf(
-      Error,
+      PetNotFoundError,
     )
   })
 })

@@ -2,6 +2,7 @@ import { InMemoryOrgRepository } from '@/repositories/in-memory/in-memory-org-re
 import { CreateOrgUseCase } from './create-org-use-case'
 import { makeOrganization } from '@tests/factories/make-org.factory'
 import { compare } from 'bcrypt'
+import { OrgAlreadyExistsError } from './errors/org-already-exists-error'
 
 describe('Create Organization Use Case', () => {
   let organizationInMemoryRepository: InMemoryOrgRepository
@@ -24,7 +25,9 @@ describe('Create Organization Use Case', () => {
 
     await organizationInMemoryRepository.create(organization)
 
-    await expect(sut.execute(organization)).rejects.toBeInstanceOf(Error)
+    await expect(sut.execute(organization)).rejects.toBeInstanceOf(
+      OrgAlreadyExistsError,
+    )
 
     // TODO: Criar classe de erro.
   })

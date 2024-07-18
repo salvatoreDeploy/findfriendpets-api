@@ -1,5 +1,6 @@
 import { OrganizationRepositoy } from '@/repositories/organization.repository'
 import { PetRepository } from '@/repositories/pet.repository'
+import { OrgNotFoundError } from './errors/org-not-found-error'
 
 interface RegisterPetWithOrganizationRequest {
   name: string
@@ -30,7 +31,7 @@ export class RegisterPetWithOrganization {
       await this.oragnizationRepository.findById(organizationId)
 
     if (!organization) {
-      throw new Error('Organization not existed')
+      throw new OrgNotFoundError()
     }
 
     const pet = await this.petRepository.register({
